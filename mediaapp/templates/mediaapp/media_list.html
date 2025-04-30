@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Media Library</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <h2 class="mb-4">Media Library</h2>
+    <a href="{% url 'upload_media' %}" class="btn btn-success mb-4">Upload New</a>
+
+    {% if media_files %}
+        <div class="row">
+            {% for media in media_files %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        {% if media.media_type == "image" %}
+                            <img src="{{ media.file.url }}" class="card-img-top" alt="{{ media.title }}">
+                        {% else %}
+                            <div class="card-body">
+                                <p class="text-muted">Non-image file</p>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ media.title }}</h5>
+                            <p class="card-text"><strong>Tags:</strong> {{ media.tags }}</p>
+                            <a href="{{ media.file.url }}" class="btn btn-sm btn-primary" download>Download</a>
+                            <a href="{% url 'edit_media' media.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'delete_media' media.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No media uploaded yet.</p>
+    {% endif %}
+</div>
+</body>
+</html>

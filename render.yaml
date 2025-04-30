@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: multimedia-site
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn multimedia_project.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: multimedia_project.settings
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
